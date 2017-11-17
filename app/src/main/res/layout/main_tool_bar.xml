@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_tool_bar"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="@color/primary_color">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_weight="1.3"
+            android:layout_marginLeft="0dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_chevron_left_white_24dp"
+            android:background="@null"
+            android:id="@+id/btn_back"
+            android:text="Back"
+            android:textColor="#ffffff"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            android:textColor="#ffffff"
+            android:text="POSITION VELOCITY RESISTANCE METER"
+            android:textSize="17sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1.3"
+            android:text="NEXT"
+            android:textColor="#ffffff"
+            android:layout_marginRight="5dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableRight="@drawable/ic_chevron_right_white_24dp"
+            android:background="@null"
+            android:id="@+id/btn_forward"/>
+    </LinearLayout>
+</android.support.v7.widget.Toolbar>

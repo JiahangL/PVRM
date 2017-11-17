@@ -1,0 +1,90 @@
+<resources>
+    <string name="app_name">PVRM</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="visiblity">Set the Device to be visible to others</string>
+    <string name="find_device">Find Device</string>
+    <string name="bonded_device">Bonded Device</string>
+    <string name="waiting">Wait for connection</string>
+    <string name="stop_waiting">Stop waiting</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="send_mesg">Record data from test</string>
+    <string name="hi">Record data from real</string>
+    <string name="data_summary">Data Summary</string>
+    <string name="shared_content">Patient ID: %1$s \n Gender: %2$s \n, Date of Birth: %3$s \n,
+        Category: %4$s, Height: %5$s, Weight: %6$s, Forearm Length: %7$s, Tested Date: %8$s,
+        Motion Range: %9$s\n, Max Velocity: %10$d\n, Max Resistance: %11$s \n, Biceps Status: %12$s,
+        Triceps Status: %13$s\n, Extra Information: %14$s</string>
+    <string name="data_recording">Recording Data</string>
+    <string name="bluetooth_connection_instruction">Here are the instruction </string>
+    <string name="calibration_inst1">  Instruct the subject to the rest the arm. Then press the button below.</string>
+    <string name="calibration_inst2"> Instruct the subject to flex his/her elbow while you hold the radial part of his/her wrist. Then press the button below.</string>
+    <string name="calibration_inst3"> Instruct the subject to extend his/her elbow while you hold the ulnar part of his/her wrist. Then press the button below.</string>
+    <string name="datarecord_start">Start</string>
+    <string name="datarecord_stop">Stop</string>
+    <string name="datarecord_pause">Pause</string>
+    <string name="no_connection">No Connection</string>
+    <string name="shared_last_file">Share</string>
+    <string name="discard_last_file">Discard</string>
+
+    <!-- ClinicianDataActivity -->
+    <string-array name="STRING_ARR_clinician_names">
+        <item>Clinician Name</item>
+        <item>Shoba Raj-Underhill</item>
+        <item>Dronacharya Lamichhane</item>
+        <item>Christopher Zallek</item>
+    </string-array>
+
+    <string-array name="STRING_ARR_mts_levels">
+        <item>MTS: not selected</item>
+        <item>MTS: Level 1</item>
+        <item>MTS: Level 2</item>
+        <item>MTS: Level 3</item>
+        <item>MTS: Level 4</item>
+        <item>MTS: Level 5</item>
+    </string-array>
+
+    <string-array name="STRING_ARR_mas_levels">
+        <item>MAS: not selected</item>
+        <item>MAS: Level 1</item>
+        <item>MAS: Level 2</item>
+        <item>MAS: Level 3</item>
+        <item>MAS: Level 4</item>
+        <item>MAS: Level 5</item>
+    </string-array>
+
+    <string-array name="STRING_ARR_udprs_levels">
+        <item>UDPRS: not selected</item>
+        <item>UDPRS: Level 1</item>
+        <item>UDPRS: Level 2</item>
+        <item>UDPRS: Level 3</item>
+        <item>UDPRS: Level 4</item>
+        <item>UPPRS: Level 5</item>
+    </string-array>
+
+    <string-array name="STRING_ARR_gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="patient_category">
+        <item>Healthy</item>
+        <item>Spasticity</item>
+        <item>Rigidity</item>
+    </string-array>
+
+    <string name="go_to_unfinished_step">Back to the Last Process</string>
+    <string name="Discard">Discard</string>
+    <string name="sensitivity_collect"> Collect EMG Data</string>
+    <string name="calibration_collect">Calibration start</string>
+    <string name="calibration_instruction">1) Click SHOW VISIBLE DEVICES if this is the first time use and click the device that you want to pair\n 2)Click SHOW BOUNDED DEVICES and select the device to connect
+        \n 3)Attach the moving module on the subject’s wrist in neutral position. For passive flexion, put the moving module radius bone. For passive extension, put the moving module on the ulna bone.
+    \n 4)Attach the main module. The main module should be attached to the midpoint of the subject’s humerus. The module should be facing laterally.
+    \n 5) Click CALIBRATION START to start collecting data</string>
+    <string name="unfinished_process_prompt">The app crushed last time before finishing collecting all of the data, do you want to continue the last process?</string>
+    <string name="mts_data">_mts: </string>
+    <string name="mas_data">_mas: </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

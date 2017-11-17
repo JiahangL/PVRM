@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.jiahang.pvrm">
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity
+            android:name=".ClinicianDataActivity"
+            android:theme="@style/CustomActionBar" >
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".PatientQuestionnaireActivity"
+            android:theme="@style/CustomActionBar" />
+        <activity
+            android:name=".InstructionActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".MainActivity"/>
+        <activity
+            android:name=".PreRecordActivity" />
+
+        <activity
+            android:name=".DataRecordActivity"
+            android:theme="@style/CustomActionBar">
+
+        </activity>
+
+        <activity android:name=".SummaryActivity"></activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include android:id="@+id/main_tool_bar"
+        layout ="@layout/main_title_bar"
+        />
+
+    <TextView
+        android:id="@+id/ID_data_collection_title"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="#e0e0e0"
+        android:text="     Data Record"
+        android:gravity="center_vertical"
+        android:textSize="20sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_tool_bar" />
+    <LinearLayout
+        android:id="@+id/ID_measuring_type_indicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/ID_data_collection_title"
+        android:layout_marginRight="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp">
+
+        <TextView
+            android:id="@+id/ID_textview_flexion_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#81d2b2"
+            android:padding="10dp"
+            android:text="Flexion"
+            android:textSize="25sp" />
+        <TextView
+            android:id="@+id/ID_textview_extension_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="Extension"
+            android:textSize="25sp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:background="#e0e0e0"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/ID_measuring_type_indicator"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4">
+                <TextView
+                    android:id="@+id/ID_textview_speed"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:text="Speed"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:text="Bicep"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/ID_textview_bicep_active"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:padding="10dp"
+                    android:text="Active or Passive"
+                    android:textSize="20dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:text="Tricep"
+                    android:layout_weight="1"/>
+
+                <TextView
+                    android:id="@+id/ID_textview_tricep_active"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:padding="10dp"
+                    android:text="Active or Passive"
+                    android:textSize="20dp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#e0e0e0">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:weightSum="5"
+                    >
+
+                    <TextView
+                        android:id="@+id/ID_slow_speed_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="#ffffff"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="25dp"
+                        android:text="Slow"
+                        android:textAlignment="viewStart"
+                        android:textSize="20sp" />
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_slow_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_one_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1" />
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_slow_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_two_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1" />
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_slow_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_3_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:weightSum="5">
+
+                    <TextView
+                        android:id="@+id/ID_medium_speed_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="#ffffff"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="25dp"
+                        android:text="Medium"
+                        android:textAlignment="viewStart"
+                        android:textSize="20sp" />
+
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_medium_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_one_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"
+                        />
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_medium_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_two_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"
+                        />
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_medium_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_3_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:background="#ffffff"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:weightSum="5">
+
+                    <TextView
+                        android:id="@+id/ID_fast_speed_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="#ffffff"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="25dp"
+                        android:text="Fast"
+                        android:textAlignment="viewStart"
+                        android:textSize="20sp" />
+
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_fast_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_one_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_fast_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:src="@drawable/ic_looks_two_teal_24dp" />
+
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_fast_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_3_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:background="#ffffff"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:paddingTop="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="0dp"
+                    android:weightSum="5">
+
+                    <TextView
+                        android:id="@+id/ID_preference_speed_title"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="#ffffff"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="25dp"
+                        android:text="Your Preference"
+                        android:textAlignment="viewStart"
+                        android:textSize="20sp" />
+
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_preference_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_one_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"
+                        />
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_preference_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_two_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"
+                        />
+                    <ImageButton
+                        android:id="@+id/ID_imagebutton_preference_3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_looks_3_teal_24dp"
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:text=""
+                        android:background="#ffffff"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="5">
+
+                    <CheckBox
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/checkBox_skipfast"
+                        android:text="Skip Fast"
+                        android:textSize="20sp"
+                        android:background="#ffffff"
+                        android:layout_gravity="center"
+                        android:layout_weight="2" />
+                    <TextView
+                        android:text=""
+                        android:layout_width="0dp"
+                        android:background="#ffffff"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/ID_button_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="45dp"
+        android:background="#81d2b2"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        android:text="Share"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+</android.support.constraint.ConstraintLayout>
+</ScrollView>
