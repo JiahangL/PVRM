@@ -40,11 +40,11 @@ import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_SUBJEC
 import static com.example.jiahang.pvrm.ClinicianDataActivity.EXTRA_PATIENT_TYPE;
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_HEIGHT_FT;
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_HEIGHT_IN;
-import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_FOREARM_LENGTH;
+import static com.example.jiahang.pvrm.InstructionActivity.EXTRA_FOREARM_LENGTH;
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_WEIGHT;
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_DATE_OF_BIRTH;
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_TEST_DATE;
-import static com.example.jiahang.pvrm.ClinicianDataActivity.EXTRA_PATIENT_GENDER;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_PATIENT_GENDER;
 
 /**
  * Created by Rex on 2015/5/27.

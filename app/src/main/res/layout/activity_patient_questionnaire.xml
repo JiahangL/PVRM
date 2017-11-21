@@ -8,7 +8,7 @@
     <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context="com.example.jiahang.pvrm.PatientQuestionnaireActivity">
 
         <include android:id="@+id/main_tool_bar"
@@ -35,16 +35,18 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.6"
             tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="545dp" />
+            tools:layout_editor_absoluteY="654dp" />
 
         <LinearLayout
             android:id="@+id/ID_patient_questionnaire_top"
-            android:layout_width="584dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/main_tool_bar"
             app:layout_constraintLeft_toRightOf="parent"
-            app:layout_constraintRight_toLeftOf="parent">
+            app:layout_constraintRight_toLeftOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
 
             <TextView
                 android:id="@+id/ID_date_of_birth_title"
@@ -55,7 +57,7 @@
                 android:textStyle="bold" />
             <DatePicker
                 android:id="@+id/ID_datepicker_date_of_birth"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/ID_date_of_birth_title"
                 android:calendarViewShown="false"
@@ -156,11 +158,11 @@
                     android:layout_weight="1"
                     />
                 <TextView
-                    android:id="@+id/ID_textview_forearm_length_title"
+                    android:id="@+id/ID_textview_gender_title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="0dp"
-                    android:text="Forearm Length"
+                    android:text="Gender"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_weight="1"
@@ -191,23 +193,28 @@
                         android:layout_weight="1"
                         android:text="Right"/>
                 </RadioGroup>
-                <EditText
-                    android:id="@+id/ID_edittext_forearm_length"
+                <RadioGroup
+                    android:id="@+id/ID_radiogroup_gender"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="number"
-                    android:layout_weight=".9"
-                    />
-                <TextView
-                    android:id="@+id/ID_label_forearm_length"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="in."
-                    android:textSize="14sp"
-                    android:layout_weight=".1"
-                    android:textColor="#a0a0a0"
-                    />
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:weightSum="2"
+                    >
+                    <RadioButton
+                        android:id="@+id/ID_radiobutton_male"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Male"/>
+
+                    <RadioButton
+                        android:id="@+id/ID_radiobutton_female"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Female" />
+                </RadioGroup>
 
             </LinearLayout>
 
@@ -276,7 +283,7 @@
         <android.support.constraint.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/ID_patient_questionnaire_bottom"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context="com.example.jiahang.pvrm.PatientQuestionnaireActivity"
 
@@ -288,352 +295,504 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginEnd="8dp">
 
-        <TextView
-            android:id="@+id/ID_presence_of_tremor_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:text="Presence of tremor"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <RadioGroup
-            android:id="@+id/ID_radiogroup_presence_of_tremor"
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ID_presence_of_tremor_title"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <RadioButton
-                android:id="@+id/ID_radiobutton_presence_of_tremor_yes"
+            <TextView
+                android:id="@+id/ID_fast_extension_flexion_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_presence_of_tremor_no"
-                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Can the patient perform fast flexion/extension speed?"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_fast_extension_flexion"
+                android:layout_width="568dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"/>
-        </RadioGroup>
-        <EditText
-            android:id="@+id/ID_edittext_presence_of_tremor"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_presence_of_tremor"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:visibility="gone"/>
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_fast_extension_flexion_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_fast_extension_flexion_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_fast_extension_flexion_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_fast_extension_flexion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_fast_extension_flexion"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
 
-        <TextView
-            android:id="@+id/ID_high_stress_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/ID_edittext_presence_of_tremor"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:text="Are you experiencing high levels of stress?"
-            android:paddingTop="20dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <RadioGroup
-            android:id="@+id/ID_radiogroup_high_stress"
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ID_high_stress_title"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <RadioButton
-                android:id="@+id/ID_radiobutton_high_stress_yes"
+            <TextView
+                android:id="@+id/ID_presence_of_clonus_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_high_stress_no"
-                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/ID_edittext_fast_extension_flexion"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Presence of clonus"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_presence_of_clonus"
+                android:layout_width="568dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_high_stress_idk"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_presence_of_clonus_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_presence_of_clonus_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_presence_of_clonus_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_presence_of_clonus"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="I don't know"/>
-        </RadioGroup>
-        <EditText
-            android:id="@+id/ID_edittext_high_stress"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_high_stress"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:visibility="gone"/>
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_presence_of_clonus"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
 
-        <TextView
-            android:id="@+id/ID_fatigued_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/ID_edittext_high_stress"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:text="Do you feel fatigued?"
-            android:paddingTop="20dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <RadioGroup
-            android:id="@+id/ID_radiogroup_fatigued"
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ID_fatigued_title"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <RadioButton
-                android:id="@+id/ID_radiobutton_fatigued_yes"
+            <TextView
+                android:id="@+id/ID_presence_of_tremor_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_fatigued_no"
-                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_presence_of_clonus"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Presence of tremor"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_presence_of_tremor"
+                android:layout_width="568dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_fatigued_idk"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_presence_of_tremor_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_presence_of_tremor_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_presence_of_tremor_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_presence_of_tremor"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="I don't know"/>
-        </RadioGroup>
-        <EditText
-            android:id="@+id/ID_edittext_fatigued"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_fatigued"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:visibility="gone"/>
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_presence_of_tremor"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
 
-        <TextView
-            android:id="@+id/ID_have_infections_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/ID_edittext_fatigued"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:text="Do you have any infections?"
-            android:paddingTop="20dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <RadioGroup
-            android:id="@+id/ID_radiogroup_have_infections"
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ID_have_infections_title"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <RadioButton
-                android:id="@+id/ID_radiobutton_have_infections_yes"
+            <TextView
+                android:id="@+id/ID_high_stress_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_have_infections_no"
-                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_presence_of_tremor"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Are you experiencing high levels of stress?"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_high_stress"
+                android:layout_width="568dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_have_infections_idk"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_high_stress_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_high_stress_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_high_stress_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_high_stress_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I don't know"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_high_stress"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="I don't know"/>
-        </RadioGroup>
-        <EditText
-            android:id="@+id/ID_edittext_have_infections"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_have_infections"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:visibility="gone"/>
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_high_stress"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
 
-        <TextView
-            android:id="@+id/ID_missed_medications_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/ID_edittext_have_infections"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:text="Did you miss any medications for treating your spasticity/rigidity?"
-            android:paddingTop="20dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <RadioGroup
-            android:id="@+id/ID_radiogroup_missed_medications"
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ID_missed_medications_title"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <RadioButton
-                android:id="@+id/ID_radiobutton_missed_medications_yes"
+            <TextView
+                android:id="@+id/ID_fatigued_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_missed_medications_no"
-                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_high_stress"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Do you feel fatigued?"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_fatigued"
+                android:layout_width="568dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_missed_medications_idk"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_fatigued_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_fatigued_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_fatigued_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_fatigued_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I don't know"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_fatigued"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="I don't know"/>
-        </RadioGroup>
-        <EditText
-            android:id="@+id/ID_edittext_missed_medications"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_missed_medications"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:visibility="gone"/>
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_fatigued"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
 
-        <TextView
-            android:id="@+id/ID_taking_new_medications_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/ID_edittext_missed_medications"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:text="Are you taking new meds for treating your spasticity/rigidity?"
-            android:paddingTop="20dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <RadioGroup
-            android:id="@+id/ID_radiogroup_taking_new_medications"
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ID_taking_new_medications_title"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <RadioButton
-                android:id="@+id/ID_radiobutton_taking_new_medications_yes"
+            <TextView
+                android:id="@+id/ID_have_infections_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_taking_new_medications_no"
-                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_fatigued"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Do you have any infections?"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_have_infections"
+                android:layout_width="568dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_taking_new_medications_idk"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_have_infections_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_have_infections_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_have_infections_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_have_infections_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I don't know"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_have_infections"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="I don't know"/>
-        </RadioGroup>
-        <EditText
-            android:id="@+id/ID_edittext_taking_new_medications"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_taking_new_medications"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:visibility="gone"/>
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_have_infections"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
 
-        <TextView
-            android:id="@+id/ID_injured_arm_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/ID_edittext_taking_new_medications"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:text="Have you injured your arm with spasticity/rigidity in the past two weeks?"
-            android:paddingTop="20dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <RadioGroup
-            android:id="@+id/ID_radiogroup_injured_arm"
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ID_injured_arm_title"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <RadioButton
-                android:id="@+id/ID_radiobutton_injured_arm_yes"
+            <TextView
+                android:id="@+id/ID_missed_medications_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_injured_arm_no"
-                android:layout_width="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_have_infections"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Did you miss any medications for treating your spasticity/rigidity?"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_missed_medications"
+                android:layout_width="568dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_injured_arm_idk"
-                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_missed_medications_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_missed_medications_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_missed_medications_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_missed_medications_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I don't know"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_missed_medications"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="I don't know"/>
-        </RadioGroup>
-        <EditText
-            android:id="@+id/ID_edittext_injured_arm"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_injured_arm"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:visibility="gone"/>
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_missed_medications"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
 
-        <TextView
-            android:id="@+id/ID_feeling_pain_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/ID_edittext_injured_arm"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:text="Do you feel any pain on your arm with spasticity/rigidity?"
-            android:paddingTop="20dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-        <RadioGroup
-            android:id="@+id/ID_radiogroup_feeling_pain"
-            android:layout_width="568dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/ID_feeling_pain_title"
-            app:layout_constraintLeft_toLeftOf="parent">
-            <RadioButton
-                android:id="@+id/ID_radiobutton_feeling_pain_yes"
+            <TextView
+                android:id="@+id/ID_taking_new_medications_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_feeling_pain_no"
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_missed_medications"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Are you taking new meds for treating your spasticity/rigidity?"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_taking_new_medications"
+                android:layout_width="568dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_taking_new_medications_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_taking_new_medications_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_taking_new_medications_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_taking_new_medications_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I don't know"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_taking_new_medications"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_taking_new_medications"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
+
+            <TextView
+                android:id="@+id/ID_injured_arm_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="No"/>
-            <RadioButton
-                android:id="@+id/ID_radiobutton_feeling_pain_idk"
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_taking_new_medications"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Have you injured your arm with spasticity/rigidity in the past two weeks?"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_injured_arm"
+                android:layout_width="568dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_injured_arm_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_injured_arm_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_injured_arm_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_injured_arm_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I don't know"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_injured_arm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_injured_arm"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
+
+            <TextView
+                android:id="@+id/ID_feeling_pain_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="I don't know"/>
-        </RadioGroup>
-        <EditText
-            android:id="@+id/ID_edittext_feeling_pain"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_feeling_pain"
-            app:layout_constraintLeft_toRightOf="parent"
-            android:visibility="gone"/>
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_injured_arm"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Do you feel any pain on your arm with spasticity/rigidity?"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_feeling_pain"
+                android:layout_width="568dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_feeling_pain_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_feeling_pain_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_feeling_pain_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_feeling_pain_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I don't know"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_feeling_pain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_feeling_pain"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
+
+            <TextView
+                android:id="@+id/ID_taking_steroids_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/ID_edittext_feeling_pain"
+                app:layout_constraintLeft_toRightOf="parent"
+                android:text="Have you taken any steroids for treating spasticity or rigidity?"
+                android:paddingTop="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+            <RadioGroup
+                android:id="@+id/ID_radiogroup_taking_steroids"
+                android:layout_width="568dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/ID_taking_steroids_title"
+                app:layout_constraintLeft_toLeftOf="parent">
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_taking_steroids_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_taking_steroids_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="No"/>
+                <RadioButton
+                    android:id="@+id/ID_radiobutton_taking_steroids_idk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="I don't know"/>
+            </RadioGroup>
+            <EditText
+                android:id="@+id/ID_edittext_taking_steroids"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Please specify"
+                app:layout_constraintTop_toBottomOf="@+id/ID_radiogroup_taking_steroids"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:visibility="gone"
+                tools:layout_editor_absoluteX="8dp" />
 
         </android.support.constraint.ConstraintLayout>
-
     </android.support.constraint.ConstraintLayout>
 </ScrollView>

@@ -1,36 +1,31 @@
 package com.example.jiahang.pvrm;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import static com.example.jiahang.pvrm.ClinicianDataActivity.EXTRA_CLINICIAN_NAME;
+//import static com.example.jiahang.pvrm.ClinicianDataActivity.EXTRA_PATIENT_GENDER;
 
 public class PatientQuestionnaireActivity extends AppCompatActivity {
 
     public static final String EXTRA_TEST_DATE = "com.example.jiahang.pvrm.test_date";
     public static final String EXTRA_WEIGHT = "com.example.jiahang.pvrm.weight";
     public static final String EXTRA_TESTED_ARM = "com.example.jiahang.pvrm.tested_arm";
-    public static final String EXTRA_FOREARM_LENGTH = "com.example.jiahang.pvrm.forearm_length";
+    public static final String EXTRA_PATIENT_GENDER = "com.example.jiahang.pvrm.patient_gender";
     public static final String EXTRA_WRIST_ANGLE = "com.example.jiahang.pvrm.wrist_angle";
     public static final String EXTRA_DATE_OF_BIRTH = "com.example.jiahang.pvrm.date_of_birth";
     public static final String EXTRA_HEIGHT_FT = "com.example.jiahang.pvrm.height_ft";
@@ -47,6 +42,9 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     public static final String EXTRA_INJURED_ARM = "com.example.jiahang.pvrm.injured_arm";
     public static final String EXTRA_FEELING_PAIN = "com.example.jiahang.pvrm.feeling_pain";
 
+    ArrayList<View> unfilledViews = new ArrayList<>();
+    ArrayList<View> filledViews = new ArrayList<>();
+
     Button button_nextbtn;
 
     /**Top Left elements **/
@@ -57,12 +55,13 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     TextView textView_weight_label;
     TextView textView_tested_arm_title;
     RadioGroup radioGroup_arm;
-    TextView textView_forearm_length;
-    EditText editText_forearm_length;
+    TextView textView_gender;
+    RadioGroup radioGroup_gender;
     TextView textView_wrist_angle_title;
     EditText editText_wrist_angle;
     TextView textView_wrist_angle_label;
     String whichArm;
+    String gender;
 
     /**Top Right elements **/
     TextView textView_date_of_birth_title;
@@ -77,6 +76,12 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     TextView textView_arm_angle_label;
 
     /**Bottom elements**/
+    TextView textView_fast_extension_flexion_title;
+    RadioGroup radioGroup_fast_extension_flexion;
+    EditText editText_fast_extension_flexion;
+    TextView textView_presence_of_clonus_title;
+    RadioGroup radioGroup_presence_of_clonus;
+    EditText editText_presence_of_clonus;
     TextView textView_presense_of_tremor_title;
     RadioGroup radioGroup_presence_of_tremor;
     EditText editText_presence_of_tremor;
@@ -99,8 +104,11 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     RadioGroup radioGroup_injured_arm;
     EditText editText_injured_arm;
     TextView textView_feeling_pain_title;
-    EditText editText_feeling_pain;
     RadioGroup radioGroup_feeling_pain;
+    EditText editText_feeling_pain;
+    TextView textView_taking_steroids;
+    RadioGroup radioGroup_taking_steroids;
+    EditText editText_taking_steroids;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,17 +120,18 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = createIntent();
-                startActivity(intent);
+                if(checkRequiredFields())
+                    startActivity(intent);
+                highlightRequired();
             }
         });
 
-        initUITopLeft();
-        initUITopRight();
+        initUITop();
         initUIBottom();
 
     }
 
-    public void initUITopLeft() {
+    public void initUITop() {
         /*
         textView_gender_title = (TextView)findViewById(R.id.ID_gender_title);
         spinner_gender = (Spinner)findViewById(R.id.ID_spinner_gender);
@@ -160,15 +169,29 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
             }
         });
 
-        textView_forearm_length = (TextView)findViewById(R.id.ID_textview_forearm_length_title);
-        editText_forearm_length = (EditText)findViewById(R.id.ID_edittext_forearm_length);
+        textView_gender = (TextView)findViewById(R.id.ID_textview_gender_title);
+        radioGroup_gender = (RadioGroup)findViewById(R.id.ID_radiogroup_gender);
+        radioGroup_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if(checkedId == R.id.ID_radiobutton_male) {
+                    //TODO: save the selected arm to local variable
+                    RadioButton temp = (RadioButton)findViewById(R.id.ID_radiobutton_male);
+                    gender = temp.getText().toString();
+                    Toast.makeText(getApplicationContext(),gender,Toast.LENGTH_LONG).show();
+                } else if (checkedId == R.id.ID_radiobutton_female) {
+                    //TODO: save the selected arm to local variable
+                    RadioButton temp = (RadioButton)findViewById(R.id.ID_radiobutton_female);
+                    gender = temp.getText().toString();
+                    Toast.makeText(getApplicationContext(),gender,Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         textView_wrist_angle_title = (TextView)findViewById(R.id.ID_wrist_angle_title);
         editText_wrist_angle = (EditText)findViewById(R.id.ID_edittext_wristangle);
         textView_wrist_angle_label = (TextView)findViewById(R.id.ID_label_wristangle);
-    }
 
-    public void initUITopRight() {
         textView_date_of_birth_title = (TextView)findViewById(R.id.ID_date_of_birth_title);
         Calendar calendar = Calendar.getInstance();
         datepicker_date_of_birth = (DatePicker)findViewById(R.id.ID_datepicker_date_of_birth);
@@ -187,6 +210,40 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     }
 
     public void initUIBottom() {
+        editText_fast_extension_flexion = (EditText)findViewById(R.id.ID_edittext_fast_extension_flexion);
+        textView_fast_extension_flexion_title = (TextView)findViewById(R.id.ID_fast_extension_flexion_title);
+        radioGroup_fast_extension_flexion = (RadioGroup)findViewById(R.id.ID_radiogroup_fast_extension_flexion);
+        radioGroup_fast_extension_flexion.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.ID_radiobutton_fast_extension_flexion_yes) {
+                    editText_fast_extension_flexion.setText("");
+                    editText_fast_extension_flexion.setVisibility(View.GONE);
+                    //TODO: save the selected arm to local variable
+                } else if(checkedId == R.id.ID_radiobutton_fast_extension_flexion_no) {
+                    editText_fast_extension_flexion.setVisibility(View.VISIBLE);
+                    //TODO: save the selected arm to local variable
+                }
+            }
+        });
+
+        editText_presence_of_clonus = (EditText)findViewById(R.id.ID_edittext_presence_of_clonus);
+        textView_presence_of_clonus_title = (TextView)findViewById(R.id.ID_presence_of_clonus_title);
+        radioGroup_presence_of_clonus = (RadioGroup)findViewById(R.id.ID_radiogroup_presence_of_clonus);
+        radioGroup_presence_of_clonus.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if(checkedId == R.id.ID_radiobutton_presence_of_clonus_yes) {
+                    editText_presence_of_clonus.setVisibility(View.VISIBLE);
+                    //TODO: save the selected arm to local variable
+                } else if (checkedId == R.id.ID_radiobutton_presence_of_clonus_no) {
+                    editText_presence_of_clonus.setText("");
+                    editText_presence_of_clonus.setVisibility(View.GONE);
+                    //TODO: save the selected arm to local variable
+                }
+            }
+        });
+
         editText_presence_of_tremor = (EditText)findViewById(R.id.ID_edittext_presence_of_tremor);
         textView_presense_of_tremor_title = (TextView)findViewById(R.id.ID_presence_of_tremor_title);
         radioGroup_presence_of_tremor = (RadioGroup)findViewById(R.id.ID_radiogroup_presence_of_tremor);
@@ -344,25 +401,28 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
             }
         });
 
+        editText_taking_steroids = (EditText)findViewById(R.id.ID_edittext_taking_steroids);
+        textView_taking_steroids = (TextView)findViewById(R.id.ID_taking_steroids_title);
+        radioGroup_taking_steroids = (RadioGroup)findViewById(R.id.ID_radiogroup_taking_steroids);
+        radioGroup_taking_steroids.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if(checkedId == R.id.ID_radiobutton_taking_steroids_yes) {
+                    editText_taking_steroids.setVisibility(View.VISIBLE);
+                    //TODO: save the selected arm to local variable
+                } else if (checkedId == R.id.ID_radiobutton_taking_steroids_no) {
+                    editText_taking_steroids.setText("");
+                    editText_taking_steroids.setVisibility(View.GONE);
+                    //TODO: save the selected arm to local variable
+                } else if (checkedId == R.id.ID_radiobutton_taking_steroids_idk) {
+                    editText_taking_steroids.setText("");
+                    editText_taking_steroids.setVisibility(View.GONE);
+                }
+            }
+        });
+
     }
-    /*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_patient_activity, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.ID_menuitem_clinician_next:
-                Intent intent = createIntent();
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-    */
+
     public Intent createIntent() {
         Intent lastIntent = getIntent();
 
@@ -373,7 +433,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
 
         String clinicianName = lastIntent.getStringExtra(EXTRA_CLINICIAN_NAME);
         intent.putExtra(EXTRA_WEIGHT, editText_weight.getText().toString());
-        intent.putExtra(EXTRA_FOREARM_LENGTH, editText_forearm_length.getText().toString());
+        intent.putExtra(EXTRA_PATIENT_GENDER, gender);
         intent.putExtra(EXTRA_TESTED_ARM, whichArm);
         intent.putExtra(EXTRA_WRIST_ANGLE, editText_wrist_angle.getText().toString());
 
@@ -395,5 +455,134 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_INJURED_ARM, editText_injured_arm.getText().toString());
         intent.putExtra(EXTRA_FEELING_PAIN, editText_feeling_pain.getText().toString());
         return intent;
+    }
+
+    public boolean checkRequiredFields() {
+        boolean allfieldsfilled = true;
+        //top ui
+        if(editText_weight.getText().toString().equals("")) {
+            unfilledViews.add(editText_weight);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(editText_weight);
+        }
+        if(radioGroup_arm.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_arm);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_arm);
+        }
+        if(editText_wrist_angle.getText().toString().equals("")) {
+            unfilledViews.add(editText_wrist_angle);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(editText_wrist_angle);
+        }
+        if(editText_height_ft.getText().toString().equals("")) {
+            unfilledViews.add(editText_height_ft);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(editText_height_ft);
+        }
+        if(editText_height_in.getText().toString().equals("")) {
+            unfilledViews.add(editText_height_in);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(editText_height_in);
+        }
+        if(radioGroup_gender.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_gender);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_gender);
+        }
+        if(editText_arm_angle.getText().toString().equals("")) {
+            unfilledViews.add(editText_arm_angle);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(editText_arm_angle);
+        }
+        //bot ui
+        if(radioGroup_fast_extension_flexion.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_fast_extension_flexion);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_fast_extension_flexion);
+        }
+        if(radioGroup_presence_of_clonus.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_presence_of_clonus);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_presence_of_clonus);
+        }
+        if(radioGroup_presence_of_tremor.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_presence_of_tremor);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_presence_of_tremor);
+        }
+        if(radioGroup_high_stress.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_high_stress);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_high_stress);
+        }
+        if(radioGroup_fatigued.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_fatigued);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_fatigued);
+        }
+        if(radioGroup_have_infection.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_have_infection);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_have_infection);
+        }
+        if(radioGroup_missed_medication.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_missed_medication);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_missed_medication);
+        }
+        if(radioGroup_taking_new_medication.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_taking_new_medication);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_taking_new_medication);
+        }
+        if(radioGroup_injured_arm.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_injured_arm);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_injured_arm);
+        }
+        if(radioGroup_feeling_pain.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_feeling_pain);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_feeling_pain);
+        }
+        if(radioGroup_taking_steroids.getCheckedRadioButtonId() == -1) {
+            unfilledViews.add(radioGroup_taking_steroids);
+            allfieldsfilled = false;
+        } else {
+            filledViews.add(radioGroup_taking_steroids);
+        }
+        return allfieldsfilled;
+    }
+
+    public void highlightRequired() {
+        for(View v : unfilledViews){
+            v.setBackgroundColor(getResources().getColor(R.color.requiredField));
+        }
+        for(View v : filledViews){
+            if(findViewById(v.getId()) instanceof EditText)
+                v.setBackgroundResource(R.drawable.abc_edit_text_material);
+            else if (findViewById(v.getId()) instanceof RadioGroup)
+                v.setBackgroundColor(Color.TRANSPARENT);
+        }
+        unfilledViews.clear();
+        filledViews.clear();
     }
 }

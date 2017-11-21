@@ -15,6 +15,8 @@ import android.widget.Button;
 
 public class InstructionActivity extends AppCompatActivity {
 
+    public static final String EXTRA_FOREARM_LENGTH = "com.example.jiahang.pvrm.forearm_length";
+
     ViewPager viewPager;
 
     int [] instruction_index = new int[7];
@@ -41,6 +43,7 @@ public class InstructionActivity extends AppCompatActivity {
             }
         });
     }
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_patient_activity, menu);
@@ -58,4 +61,5 @@ public class InstructionActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+    */
 }

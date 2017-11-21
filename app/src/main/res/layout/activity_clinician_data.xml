@@ -13,31 +13,38 @@
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ID_guideline_mts"
+        android:id="@+id/ID_guideline_35percent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.35"
+        tools:layout_editor_absoluteY="311dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ID_guideline_mas"
+        android:id="@+id/ID_guideline_50percent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_percent="0.5"
+        tools:layout_editor_absoluteY="444dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ID_guideline_UPDRS"
+        android:id="@+id/ID_guideline_65percent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.65" />
+        app:layout_constraintGuide_percent="0.65"
+        tools:layout_editor_absoluteY="577dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/ID_guideline_controls"
+        android:id="@+id/ID_guideline_80percent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
-
+        app:layout_constraintGuide_percent="0.8"
+        tools:layout_editor_absoluteY="710dp"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/ID_clinician_name_title"
@@ -47,125 +54,176 @@
         android:text="Clinician Name"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/ID_mts_title"
         android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="32dp"
         app:layout_constraintTop_toBottomOf="@+id/main_title_bar" />
-
     <Spinner
         android:id="@+id/ID_spinner_clinician"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginStart="8dp"
         android:background="#81d2b2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/ID_clinician_name_title" />
+        app:layout_constraintTop_toBottomOf="@+id/ID_clinician_name_title"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ID_spinner_clinician"
+        app:layout_constraintBottom_toTopOf="@+id/ID_guideline_35percent"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp">
+
+        <TextView
+            android:id="@+id/ID_patient_type_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="Patient Type"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <RadioGroup
+            android:id="@+id/ID_radiogroup_patient_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <RadioButton
+                android:id="@+id/ID_radiobutton_spasticity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Spasticity" />
+
+            <RadioButton
+            android:id="@+id/ID_radiobutton_rigidity"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Rigidity" />
+
+            <RadioButton
+                android:id="@+id/ID_radiobutton_controls"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Controls" />
+        </RadioGroup>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/ID_mts_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
         android:text="Spasticity - MTS"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ID_spinner_mts"
-        app:layout_constraintLeft_toLeftOf="@+id/ID_spinner_mts" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="32dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/ID_guideline_35percent" />
     <Spinner
         android:id="@+id/ID_spinner_mts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/ID_guideline_mts"
-        android:layout_marginRight="32dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/ID_mts_title"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:background="#81d2b2"/>
+        android:background="#81d2b2"
+        android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/ID_mas_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
         android:text="Spasticity - MAS"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/ID_spinner_mas"
-        app:layout_constraintLeft_toLeftOf="@+id/ID_spinner_mas" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="32dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/ID_guideline_50percent" />
     <Spinner
         android:id="@+id/ID_spinner_mas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/ID_guideline_mas"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:background="#81d2b2"/>
+        app:layout_constraintTop_toBottomOf="@+id/ID_mas_title"
+        android:background="#81d2b2"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/ID_udprs_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rigidity - UPDRS"
+        android:text="Rigidity - UDPRS"
         android:textSize="25dp"
         android:textStyle="bold"
-        tools:text="UDPRS"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/ID_spinner_updrs"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/ID_spinner_updrs"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="32dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/ID_guideline_35percent" />
     <Spinner
         android:id="@+id/ID_spinner_updrs"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/ID_udprs_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="-2dp"
-        app:layout_constraintBottom_toTopOf="@+id/ID_guideline_UPDRS"
-        android:layout_marginRight="32dp"
-        app:layout_constraintHorizontal_bias="1.0"
-        android:layout_marginLeft="32dp"
-        android:background="#81d2b2"/>
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="#81d2b2"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/ID_controls_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Controls"
+        android:text="Controls - Healthy"
         android:textSize="25dp"
         android:textStyle="bold"
-        tools:text="Controls"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/ID_spinner_controls"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/ID_spinner_controls"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="32dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/ID_guideline_35percent" />
     <Spinner
         android:id="@+id/ID_spinner_controls"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/ID_controls_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="-2dp"
-        app:layout_constraintBottom_toTopOf="@+id/ID_guideline_controls"
-        android:layout_marginRight="32dp"
-        app:layout_constraintHorizontal_bias="1.0"
-        android:layout_marginLeft="32dp"
-        android:background="#81d2b2"/>
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="#81d2b2"
+        android:visibility="gone"/>
 
-
+    <Button
+        android:id="@+id/ID_button_next"
+        android:layout_width="584dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/ID_guideline_80percent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        android:textSize="18sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:textAllCaps="false"
+        android:text="Next" />
 
 </android.support.constraint.ConstraintLayout>

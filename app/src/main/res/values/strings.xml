@@ -63,6 +63,7 @@
     </string-array>
 
     <string-array name="STRING_ARR_gender">
+        <item>Gender: not selected</item>
         <item>Male</item>
         <item>Female</item>
     </string-array>
