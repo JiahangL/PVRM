@@ -20,7 +20,7 @@ public class InstructionFragment extends Fragment {
     private static final String ARG_PARAM1 = "whichInstruction";
 
     // THIS IS AN EXAMPLE CHANGE
-    // TO TEST FOR GITHUBhahahah
+    // TO TEST FOR GITHUB
     // change it again
     ImageView topPic;
     ImageView botPic;
