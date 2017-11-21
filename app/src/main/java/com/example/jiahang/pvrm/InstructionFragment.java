@@ -19,8 +19,6 @@ public class InstructionFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "whichInstruction";
 
-    TextView nonsense;
-
     ImageView topPic;
     ImageView botPic;
     TextView instruction_one;
