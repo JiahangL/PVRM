@@ -19,10 +19,17 @@ public class InstructionFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "whichInstruction";
 
+    //I can do whatever in the result column
+
     int nonsense2;
     int nonsense;
 
 
+    // THIS IS AN EXAMPLE CHANGE
+    // TO TEST FOR GITHUB hahaha
+    // change it second time
+    // change it again
+    // just make the change
     ImageView topPic;
     ImageView botPic;
     TextView instruction_one;
