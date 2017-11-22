@@ -23,6 +23,7 @@ public class InstructionFragment extends Fragment {
     // TO TEST FOR GITHUB hahaha
     // change it second time
     // change it again
+    // just make the change
     ImageView topPic;
     ImageView botPic;
     TextView instruction_one;
