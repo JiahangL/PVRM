@@ -106,11 +106,11 @@
                 android:text="Spasticity" />
 
             <RadioButton
-            android:id="@+id/ID_radiobutton_rigidity"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Rigidity" />
+                android:id="@+id/ID_radiobutton_rigidity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rigidity" />
 
             <RadioButton
                 android:id="@+id/ID_radiobutton_controls"

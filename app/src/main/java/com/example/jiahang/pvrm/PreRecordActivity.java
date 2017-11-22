@@ -15,6 +15,7 @@ import com.example.jiahang.pvrm.connect.ConnectThread;
 import java.io.UnsupportedEncodingException;
 
 import static com.example.jiahang.pvrm.DataRecordActivity.FROM_PRERECORD_ACTIVITY;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_SKIP_FAST;
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_SUBJECT_ID;
 import static com.example.jiahang.pvrm.Shared.ACTIVITY_TRACKER;
 import static com.example.jiahang.pvrm.Shared.AVG_BICEPT;
@@ -53,6 +54,7 @@ public class PreRecordActivity extends AppCompatActivity {
         }
         else{
             step = 0;
+            Shared.putInt(getApplicationContext(), STEP_TRACKER, step);
         }
         Log.e("PrerecordActivity", "the step is " + step);
         initializeInstruction();
@@ -145,6 +147,7 @@ public class PreRecordActivity extends AppCompatActivity {
                 Intent i = new Intent(PreRecordActivity.this, DataRecordActivity.class);
                 i.putExtra(EXTRA_SUBJECT_ID, subjectID);
                 i.putExtra(FROM_PRERECORD_ACTIVITY, true);
+                i.putExtra(EXTRA_SKIP_FAST, getIntent().getBooleanExtra(EXTRA_SKIP_FAST, true));
                 startActivity(i);
             }
         });

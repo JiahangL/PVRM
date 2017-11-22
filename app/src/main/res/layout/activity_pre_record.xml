@@ -19,9 +19,11 @@
             android:id="@+id/btn_instruction1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
             android:gravity="center_vertical"
-            android:padding="20dp"
+            android:layout_margin="30dp"
+            android:textSize="25dp"
+            android:padding="10dp"
+            android:background="@color/colorPrimary"
             android:text="@string/calibration_inst1"
             android:textColor="@color/color_black" />
 
@@ -35,9 +37,11 @@
             android:layout_height="match_parent"
             android:text="@string/calibration_inst2"
             android:id="@+id/btn_instruction2"
-            android:padding="20dp"
+            android:padding="10dp"
             android:gravity="center_vertical"
-            android:background="@android:color/transparent"
+            android:layout_margin="30dp"
+            android:textSize="25dp"
+            android:background="@color/colorPrimary"
             android:textColor="@color/inactive_color"/>
     </LinearLayout>
     <LinearLayout
@@ -49,9 +53,12 @@
             android:layout_height="match_parent"
             android:text="@string/calibration_inst3"
             android:id="@+id/btn_instruction3"
-            android:padding="20dp"
+            android:layout_margin="30dp"
+            android:textSize="25dp"
+            android:padding="10dp"
+            android:background="@color/colorPrimary"
             android:gravity="center_vertical"
-            android:background="@android:color/transparent"
+
             android:textColor="@color/inactive_color"/>
     </LinearLayout>
     <LinearLayout

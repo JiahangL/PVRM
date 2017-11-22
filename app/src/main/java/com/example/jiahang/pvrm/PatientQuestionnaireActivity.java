@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import static com.example.jiahang.pvrm.ClinicianDataActivity.EXTRA_CLINICIAN_NAME;
+import static com.example.jiahang.pvrm.R.id.ID_radiobutton_fast_extension_flexion_yes;
 //import static com.example.jiahang.pvrm.ClinicianDataActivity.EXTRA_PATIENT_GENDER;
 
 public class PatientQuestionnaireActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     public static final String EXTRA_ARM_ANGLE = "com.example.jiahang.pvrm.arm_angle";
 
     public static final String EXTRA_SUBJECT_ID = "com.example.jiahang.pvrm.subject_id";
+    public static final String EXTRA_PRESENCE_OF_CLONUS = "com.example.jiahang.pvrm.presence_of_clonus";
     public static final String EXTRA_PRESENCE_OF_TREMOR = "com.example.jiahang.pvrm.presence_of_tremor";
     public static final String EXTRA_HIGH_STRESS = "com.example.jiahang.pvrm.high_stress";
     public static final String EXTRA_FATIGUED = "com.example.jiahang.pvrm.fatigued";
@@ -41,6 +43,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     public static final String EXTRA_TAKING_NEW_MEDICATION = "com.example.jiahang.pvrm.taking_new_medication";
     public static final String EXTRA_INJURED_ARM = "com.example.jiahang.pvrm.injured_arm";
     public static final String EXTRA_FEELING_PAIN = "com.example.jiahang.pvrm.feeling_pain";
+    public static final String EXTRA_SKIP_FAST = "com.example.jiahang.pvrm.skip_fast";
 
     ArrayList<View> unfilledViews = new ArrayList<>();
     ArrayList<View> filledViews = new ArrayList<>();
@@ -74,7 +77,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     TextView textView_arm_angle_title;
     EditText editText_arm_angle;
     TextView textView_arm_angle_label;
-
+    RadioGroup radioGroup_skip_fast;
     /**Bottom elements**/
     TextView textView_fast_extension_flexion_title;
     RadioGroup radioGroup_fast_extension_flexion;
@@ -152,6 +155,8 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         editText_weight = (EditText)findViewById(R.id.ID_edittext_weight);
         textView_weight_label = (TextView)findViewById(R.id.ID_label_weight);
 
+        radioGroup_skip_fast = (RadioGroup) findViewById(R.id.ID_radiogroup_fast_extension_flexion);
+
         textView_tested_arm_title = (TextView)findViewById(R.id.ID_tested_arm_title);
         radioGroup_arm = (RadioGroup)findViewById(R.id.ID_radiogroup_arm);
         radioGroup_arm.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -216,7 +221,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         radioGroup_fast_extension_flexion.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-                if (checkedId == R.id.ID_radiobutton_fast_extension_flexion_yes) {
+                if (checkedId == ID_radiobutton_fast_extension_flexion_yes) {
                     editText_fast_extension_flexion.setText("");
                     editText_fast_extension_flexion.setVisibility(View.GONE);
                     //TODO: save the selected arm to local variable
@@ -436,7 +441,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_PATIENT_GENDER, gender);
         intent.putExtra(EXTRA_TESTED_ARM, whichArm);
         intent.putExtra(EXTRA_WRIST_ANGLE, editText_wrist_angle.getText().toString());
-
+        intent.putExtra(EXTRA_SKIP_FAST, radioGroup_skip_fast.getCheckedRadioButtonId()!=ID_radiobutton_fast_extension_flexion_yes );
         String dob = Integer.toString(datepicker_date_of_birth.getMonth()) + "-" +
                 Integer.toString(datepicker_date_of_birth.getDayOfMonth()) + "-" +
                 Integer.toString(datepicker_date_of_birth.getYear());
@@ -445,7 +450,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_HEIGHT_FT, editText_height_ft.getText().toString());
         intent.putExtra(EXTRA_HEIGHT_IN, editText_height_in.getText().toString());
         intent.putExtra(EXTRA_ARM_ANGLE, editText_arm_angle.getText().toString());
-
+        intent.putExtra(EXTRA_PRESENCE_OF_CLONUS, editText_presence_of_clonus.getText().toString());
         intent.putExtra(EXTRA_PRESENCE_OF_TREMOR, editText_presence_of_tremor.getText().toString());
         intent.putExtra(EXTRA_HIGH_STRESS, editText_high_stress.getText().toString());
         intent.putExtra(EXTRA_FATIGUED, editText_fatigued.getText().toString());
@@ -454,6 +459,8 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_TAKING_NEW_MEDICATION, editText_taking_new_medication.getText().toString());
         intent.putExtra(EXTRA_INJURED_ARM, editText_injured_arm.getText().toString());
         intent.putExtra(EXTRA_FEELING_PAIN, editText_feeling_pain.getText().toString());
+
+
         return intent;
     }
 
@@ -585,4 +592,5 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         unfilledViews.clear();
         filledViews.clear();
     }
+
 }

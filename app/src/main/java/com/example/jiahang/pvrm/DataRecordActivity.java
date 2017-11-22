@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.example.jiahang.pvrm.connect.ConnectThread;
 
+import org.w3c.dom.Text;
+
 import java.io.UnsupportedEncodingException;
 
 import javax.xml.datatype.Duration;
@@ -26,6 +28,7 @@ import static android.R.attr.editable;
 import static android.R.attr.visibility;
 import static android.util.Log.e;
 import static android.view.View.GONE;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_SKIP_FAST;
 import static com.example.jiahang.pvrm.Shared.ACTIVITY_TRACKER;
 import static com.example.jiahang.pvrm.Shared.HAS_BEEN_SAHRED;
 import static com.example.jiahang.pvrm.Shared.RECORD_STEP_TRACKER;
@@ -38,15 +41,15 @@ import static com.example.jiahang.pvrm.Shared.getInt;
 
 public class DataRecordActivity extends AppCompatActivity {
     ImageButton[] btns = new ImageButton[12];
-    int[] counters = new int[24];
     int currentClick;
     Button btn_share;
     TextView textview_speed,  textview_bicep_active,  textview_tricep_active,  textview_flexion_title,  textview_extension_title;
+    TextView textview_load, textview_angel, textview_bicep, textview_tricep, textview_speed_realtime;
     // EditText et_mts, et_mas;
     int done_step;
     int step;
     int fastTest = 12;
-    CheckBox mSkipFast;
+    //CheckBox mSkipFast;
     boolean[] has_done = new boolean[24];
     ConnectThread mConnectThread;
     MyFileWriter mMyFileWriter;
@@ -57,8 +60,8 @@ public class DataRecordActivity extends AppCompatActivity {
     private static String TEST_TERM;
     int lowestBounce = 5;
     int lowerbounce = 40;
-    int higherbounce = 100;
-
+    int higherbounce = 70;
+    boolean skip_fast = true;
     int status = 0;
     String f_mts, f_mas, e_mas, e_mts;
     String[] status_array = {"Flexion", "Extension"};
@@ -82,14 +85,15 @@ public class DataRecordActivity extends AppCompatActivity {
             has_done[i] = true;
         }
         e("done step", ""+done_step);
-        initUI();
+
 
         mMyFileWriter = MyFileWriter.get(null, null, null);
+        initUI();
         mConnectThread = ConnectThread.get(null, null, null); //use the connect thread to send command
         userid = getIntent().getStringExtra(PatientQuestionnaireActivity.EXTRA_SUBJECT_ID);
         //mMyFileWriter = MyFileWriter.get(null, null, null);
 
-        mCountdownTimerBeforeStart =  new CountDownTimer(2*1000, 250) {
+        mCountdownTimerBeforeStart =  new CountDownTimer(2*1000, 150) {
             int secondsLeft = 0;
             @Override
             public void onTick(long ms) {
@@ -109,10 +113,16 @@ public class DataRecordActivity extends AppCompatActivity {
             }
         };
 
-        mCountdownTimerAfterStart = new CountDownTimer(3*1000, 250) {
+        mCountdownTimerAfterStart = new CountDownTimer(3*1000, 150) {
             int secondsLeft = 0;
             @Override
             public void onTick(long ms) {
+                String[] tmp = mMyFileWriter.getCurrentData();
+                textview_speed_realtime.setText(tmp[4]);
+                textview_angel.setText(tmp[2]);
+                textview_tricep_active.setText(tmp[0]);
+                textview_bicep_active.setText(tmp[1]);
+                textview_load.setText(tmp[3]);
                 if (Math.round((float)ms / 1000.0f) != secondsLeft)
                 {
                     secondsLeft = Math.round((float)ms / 1000.0f);
@@ -127,6 +137,7 @@ public class DataRecordActivity extends AppCompatActivity {
 
                 float speed = mMyFileWriter.getAvgNumber();
                 Log.e("speedssss final", ""+speed);
+                textview_speed_realtime.setText(""+speed);
                 int remainder= step%12;
                 btn_share.setText("SHARE");
 
@@ -141,12 +152,15 @@ public class DataRecordActivity extends AppCompatActivity {
                     NegativeResultFragment dialog = new NegativeResultFragment();
                     dialog.setArguments(bundle);
                     dialog.show(getSupportFragmentManager(), "speed");
+                    mMyFileWriter.flush();
                     mMyFileWriter.writeData("\nbad\n");
                 }
                 else if(active_bi||active_tri) {
+                    mMyFileWriter.flush();
                     mMyFileWriter.writeData("\nbad\n");
                 }
                 else {
+                    if(done_step<24)
                     has_done[done_step] = true;
                     done_step = done_step == currentClick+12*status ? done_step + 1 : done_step;
                     Shared.putInt(getApplicationContext(), RECORD_STEP_TRACKER, done_step);
@@ -155,6 +169,7 @@ public class DataRecordActivity extends AppCompatActivity {
                     status = done_step >= 12? 1:0;
                 }
                 updateUI();
+
             }
 
         };
@@ -169,7 +184,8 @@ public class DataRecordActivity extends AppCompatActivity {
                     currentClick = i;
                     step = i + 12;
                     change_btns_with_hasdone();
-                    btns[currentClick].setImageResource(getCorrectResource(i, 2));
+                    if(done_step<24)
+                        btns[currentClick].setImageResource(getCorrectResource(i, 2));
                     break;
                 }
             }
@@ -179,27 +195,23 @@ public class DataRecordActivity extends AppCompatActivity {
     };
     private void initUI(){
         textview_speed = (TextView) findViewById(R.id.ID_textview_speed);
+        textview_angel = (TextView) findViewById(R.id.ID_textview_angel);
+        textview_bicep = (TextView) findViewById(R.id.ID_textview_patient_bicep);
+        textview_tricep = (TextView) findViewById(R.id.ID_textview_patient_tricep);
+        textview_load =(TextView) findViewById(R.id.ID_textview_load);
 
-        mSkipFast = (CheckBox) findViewById(R.id.checkBox_skipfast);
-        mSkipFast.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    for(int i = 6; i < 9; i++){
-                        has_done[i] = true;
-                        has_done[i+12] = true;
-                        btns[i].setVisibility(GONE);
-                    }
-                }
-                else{
-                    for(int i = 6; i < 9; i++){
-                        has_done[i] = false;
-                        has_done[i+12] = false;
-                            btns[i].setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-        });
+        textview_tricep.setText(Shared.getFloat(this, Shared.AVG_TRICEPT, 0)+"");
+        textview_bicep.setText(Shared.getFloat(this, Shared.AVG_BICEPT, 0)+"");
+        textview_speed_realtime = (TextView) findViewById(R.id.ID_textview_speed_realtime);
+        //mSkipFast = (CheckBox) findViewById(R.id.checkBox_skipfast);
+        skip_fast = getIntent().getBooleanExtra(EXTRA_SKIP_FAST, true);
+        if (skip_fast){
+            for(int i = 6; i < 9; i++){
+                has_done[i] = true;
+                has_done[i+12] = true;
+            }
+            findViewById(R.id.ID_linearlayout_fast).setVisibility(GONE);
+        }
 
         textview_bicep_active = (TextView) findViewById(R.id.ID_textview_bicep_active);
         textview_tricep_active = (TextView) findViewById(R.id.ID_textview_tricep_active);
@@ -237,7 +249,8 @@ public class DataRecordActivity extends AppCompatActivity {
         });
 
         change_btns_with_hasdone();
-        btns[done_step%12].setImageResource(getCorrectResource(done_step, 2));
+        if(done_step<24)
+            btns[done_step%12].setImageResource(getCorrectResource(done_step, 2));
         if(1==status){
             textview_flexion_title.setBackgroundColor(getResources().getColor(R.color.inactive_color));
             textview_extension_title.setBackgroundColor(getResources().getColor(R.color.primary_color));
@@ -298,11 +311,12 @@ public class DataRecordActivity extends AppCompatActivity {
         }
         else{
             if(status == 0){
-                textview_flexion_title.setBackgroundColor(getResources().getColor(R.color.inactive_color));
-                textview_extension_title.setBackgroundColor(getResources().getColor(R.color.primary_color));
                 status=1;
                 change_btns_with_hasdone();
             }
+            textview_flexion_title.setBackgroundColor(getResources().getColor(R.color.inactive_color));
+            textview_extension_title.setBackgroundColor(getResources().getColor(R.color.primary_color));
+        if(done_step<24)
             btns[done_step%12].setImageResource(getCorrectResource(done_step,2));
         }
     }
@@ -334,6 +348,9 @@ public class DataRecordActivity extends AppCompatActivity {
         public void onClick(View view) {
             changeButton();
             change_btns_with_hasdone();
+            if(done_step>=24){
+                return;
+            }
             if(status==1 && done_step>12)
                 btns[done_step%12].setImageResource(getCorrectResource(done_step,2));
             else if(status ==0 && done_step<12){
@@ -342,9 +359,9 @@ public class DataRecordActivity extends AppCompatActivity {
         }
     };
     private void change_btns_with_hasdone(){
-        if(mSkipFast.isChecked()){
-            if(done_step==6){
-                done_step+=3;
+        if(skip_fast){
+            if(done_step==6||done_step == 18){
+                done_step +=3;
             }
         }
         for( int i = 0; i < 12; i++){
@@ -358,7 +375,7 @@ public class DataRecordActivity extends AppCompatActivity {
             }
         }
 
-        btns[done_step%12].setEnabled(true);
+            btns[done_step%12].setEnabled(true);
     }
 }
 

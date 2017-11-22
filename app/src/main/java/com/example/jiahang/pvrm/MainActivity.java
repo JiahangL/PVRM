@@ -31,8 +31,22 @@ import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_ARM_ANGLE;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_FATIGUED;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_FEELING_PAIN;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_HAVE_INFECTION;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_HIGH_STRESS;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_INJURED_ARM;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_MISSED_MEDICATION;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_PRESENCE_OF_CLONUS;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_PRESENCE_OF_TREMOR;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_SKIP_FAST;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_TAKING_NEW_MEDICATION;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_TESTED_ARM;
+import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_WRIST_ANGLE;
 import static com.example.jiahang.pvrm.Shared.ACTIVITY_TRACKER;
 import static com.example.jiahang.pvrm.Shared.TO_UNFINISH;
 
@@ -84,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
     private Toolbar myToolbar;
     private Button find_device_btn;
     private Button goback_btn;
-    private Button show_bounded_btn;
+    private Button connect_btn;
     private Button next_btn;
     private Button calibration_btn;
 
@@ -112,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         unfinished = i.getBooleanExtra(EXTRA_UNFINISH, false);
         forearmLength = i.getStringExtra(EXTRA_FOREARM_LENGTH);
         subjectID = i.getStringExtra(EXTRA_SUBJECT_ID);
+
         initUI();
 
         registerBluetoothReceiver();
@@ -237,9 +252,9 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         mAdapter = new DeviceAdapter(mDeviceList, this);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(bindedDeviceClick);
-        find_device_btn = (Button) findViewById(R.id.find_device);
-        show_bounded_btn = (Button) findViewById(R.id.bounded_device);
-        show_bounded_btn.setOnClickListener(new View.OnClickListener() {
+       // find_device_btn = (Button) findViewById(R.id.find_device);
+        connect_btn = (Button) findViewById(R.id.bounded_device);
+        connect_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mBondedDeviceList = mController.getBondedDeviceList();
@@ -250,14 +265,14 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         });
         myToolbar = (Toolbar) findViewById(R.id.main_tool_bar);
         setSupportActionBar(myToolbar);
-        find_device_btn.setOnClickListener(new View.OnClickListener() {
+      /*  find_device_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAdapter.refresh(mDeviceList);
                 mController.findDevice();
                 mListView.setOnItemClickListener(bindDeviceClick);
             }
-        });
+        });*/
         goback_btn = (Button) findViewById(R.id.btn_back);
         next_btn = (Button) findViewById(R.id.btn_forward);
         next_btn.setOnClickListener(new View.OnClickListener() {
@@ -265,6 +280,7 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, PreRecordActivity.class);
                 i.putExtra(EXTRA_SUBJECT_ID, subjectID);
+                i.putExtra(EXTRA_SKIP_FAST, getIntent().getBooleanExtra(EXTRA_SKIP_FAST, true));
                 startActivity(i);
             }
         });
@@ -372,6 +388,8 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             device = mBondedDeviceList.get(i);
+            connect_btn.setText("Connecting...");
+            connect_btn.setBackgroundColor(getResources().getColor(R.color.inactive_color));
             Log.e("OnItemClick", i + " position is bounded");
             if (mConnectThread != null) {
                 mConnectThread.cancel();
@@ -379,7 +397,12 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
             }
             // TODO:  might have problem with connect thread
             mConnectThread = ConnectThread.get(device, mController.getAdapter(), mUIHandler);
-            mConnectThread.start();
+                try {
+                    mConnectThread.start();
+                }catch (Exception w){
+                    Log.e("Main connect thread", w.toString());
+                    mConnectThread.cancel();
+                }
         }
     };
 
@@ -404,6 +427,8 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
 
     @Override
     public void succeed() {
+        connect_btn.setText("Connect");
+        connect_btn.setBackgroundColor(getResources().getColor(R.color.primary_color));
         Bundle bundle = new Bundle();
         String tmp = " device ";
         if (device != null) {
@@ -443,6 +468,9 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         NegativeResultFragment dialog = new NegativeResultFragment();
         dialog.setArguments(bundle);
         dialog.show(getSupportFragmentManager(), DIALOG_FAIL);
+        connect_btn.setBackgroundColor(getResources().getColor(R.color.primary_color));
+        connect_btn.setText("Connect");
+        mConnectThread.cancel();
     }
 
 
@@ -459,9 +487,32 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         subjectDOB = i.getStringExtra(EXTRA_DATE_OF_BIRTH);
         subjectTestDate = i.getStringExtra(EXTRA_TEST_DATE);
         subjectGender = i.getStringExtra(EXTRA_PATIENT_GENDER);
-        String sharing = "Patient ID: " + subjectID + "\n Gender: " + subjectGender + "\n Date of Birth: " + subjectDOB + "\n Category: "
-                + categorySelected + "\n Height: " + heightFeet +"ft. " +  heightInch + " in\nWeight: " + subjectWeight + "\n Forearm Length: "
-                + forearmLength + "\nTested Date: " + subjectTestDate + "\n";
+        String sharing = "";
+       // String sharing = "Patient ID: " + subjectID + "\n Gender: " + subjectGender + "\n Date of Birth: " + subjectDOB + "\n + "\n Height: " + heightFeet +"ft. " +  heightInch + " in\nWeight: " + subjectWeight + "\n  + "\nTested Date: " + subjectTestDate + "\n";
+        sharing = sharing+ "\nCategory: " + categorySelected
+                +"\nForearm Length: "+ forearmLength
+        +"\nTestDate :"+i.getStringExtra( EXTRA_TEST_DATE )
+        +"\nWeight :"+i.getStringExtra( EXTRA_WEIGHT )
+        +"\nExtra tested arm :"+i.getStringExtra( EXTRA_TESTED_ARM )
+                +"\nGender :"+i.getStringExtra( EXTRA_PATIENT_GENDER )
+                +"\nWrist Angel :"+i.getStringExtra( EXTRA_WRIST_ANGLE )
+                +"\nDOB :"+i.getStringExtra( EXTRA_DATE_OF_BIRTH )
+                +"\nHeight ft :"+i.getStringExtra( EXTRA_HEIGHT_FT )
+                +"\nHeight inch :"+i.getStringExtra( EXTRA_HEIGHT_IN )
+                +"\nArm Angle :"+i.getStringExtra( EXTRA_ARM_ANGLE )
+                +"\nSubject ID :"+i.getStringExtra( EXTRA_SUBJECT_ID )
+                +"\nPresence of Clonus: " +i.getStringExtra(EXTRA_PRESENCE_OF_CLONUS)
+                +"\nPresence of tremor :"+i.getStringExtra( EXTRA_PRESENCE_OF_TREMOR )
+                +"\nHigh Stress :"+i.getStringExtra( EXTRA_HIGH_STRESS )
+                +"\nFaigued :"+i.getStringExtra( EXTRA_FATIGUED )
+                +"\nHave infection :"+i.getStringExtra( EXTRA_HAVE_INFECTION )
+                +"\nMissed Medication :"+i.getStringExtra( EXTRA_MISSED_MEDICATION )
+                +"\nTaking new Medication :"+i.getStringExtra( EXTRA_TAKING_NEW_MEDICATION )
+                +"\nInjured arm :"+i.getStringExtra( EXTRA_INJURED_ARM )
+                +"\nFeeling pain :"+i.getStringExtra( EXTRA_FEELING_PAIN )
+                +"\nSkip fast :"+i.getBooleanExtra(EXTRA_SKIP_FAST, true)+"\n";
         return sharing;
     }
+
+
 }

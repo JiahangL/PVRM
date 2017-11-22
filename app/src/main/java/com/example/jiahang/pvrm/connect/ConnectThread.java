@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Handler;
 import android.util.Log;
 
+import com.example.jiahang.pvrm.MyDataHandler;
+
 import java.io.IOException;
 import java.util.UUID;
 
@@ -65,6 +67,7 @@ public class ConnectThread extends Thread {
                 mmSocket.connect();
             } catch (IOException e) {
                 Log.e("Connect Thread0", connectException.toString());
+                mHandler.obtainMessage(Constant.MSG_ERROR).sendToTarget();
                 return;
             }
         }
@@ -82,6 +85,9 @@ public class ConnectThread extends Thread {
     public void cancel() {
         try {
             mmSocket.close();
+            if(mConnectThread!=null)
+            mConnectThread.interrupt();
+            mConnectThread=null;
         } catch (IOException e) { }
     }
 

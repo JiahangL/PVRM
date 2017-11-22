@@ -1,5 +1,6 @@
 package com.example.jiahang.pvrm;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -54,6 +55,14 @@ public class ClinicianDataActivity extends AppCompatActivity {
 
         initSpinnersUI();
         initRadioGroup();
+        if(!Shared.getBoolean(this, Shared.HAS_BEEN_SAHRED, true)){
+            ShareLastFileFragment dialog = new ShareLastFileFragment();
+            dialog.show(getSupportFragmentManager(), "share_last_file");
+        }
+        if(Shared.getBoolean(this, Shared.TO_UNFINISH, false)){
+            UnfinishedPorgressFragment dialog = new UnfinishedPorgressFragment();
+            dialog.show(getSupportFragmentManager(), "back_to_unfinished_process");
+        }
 
         button_next = (Button)findViewById(R.id.ID_button_next);
         button_next.setOnClickListener(new View.OnClickListener() {

@@ -22,6 +22,13 @@ public class MyFileWriter {
     //FileOutputStream outputStream;
     File file;
     Context context;
+    private static String current_speed;
+    private static String current_bicept;
+    private static String current_tricept;
+    private static String current_load;
+    private static String current_angle;
+
+
     private static float speed_sum = 0;
     private static int count=0;
     private static FileWriter mFileWriter;
@@ -123,7 +130,12 @@ public class MyFileWriter {
                 count+=1;
 
                 float tmp_speed = Math.abs(Float.parseFloat(tmp[2]));
-                Log.e("speedssssss tmp[2]", tmp[2]);
+                current_angle = tmp[0];
+                current_load = tmp[1];
+                current_speed = tmp[2];
+                current_bicept = tmp[3];
+                current_tricept = tmp[4];
+
                 if(tmp_speed > 20){
                     speed_sum += tmp_speed;
                     speed_count+=1;
@@ -167,7 +179,7 @@ public class MyFileWriter {
 
     public static float getAvgNumber(){
         Log.e("speedssssss sum_count", ""+speed_sum+"  "+speed_count);
-        float res = speed_count<30? 0: speed_sum /speed_count;
+        float res = speed_count<20? 0: speed_sum /speed_count;
         return res;
     }
     public static boolean biceptActive(){
@@ -182,5 +194,16 @@ public class MyFileWriter {
     }
     public static float getAvgtricept(){
         return tricept_sum/count;
+    }
+
+    public static String[] getCurrentData() {
+        return new String[]{current_tricept, current_bicept, current_angle, current_load, current_speed};
+    }
+    public static void flush(){
+        try {
+            mFileWriter.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

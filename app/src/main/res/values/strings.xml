@@ -85,7 +85,7 @@
     <string name="unfinished_process_prompt">The app crushed last time before finishing collecting all of the data, do you want to continue the last process?</string>
     <string name="mts_data">_mts: </string>
     <string name="mas_data">_mas: </string>
-
+    <string name="speed_standard">Slow: 5-40  \nMedium: 41-70 Fast: >70</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
