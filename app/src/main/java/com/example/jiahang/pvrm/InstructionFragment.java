@@ -16,9 +16,11 @@ import static com.example.jiahang.pvrm.InstructionActivity.EXTRA_FOREARM_LENGTH;
 
 public class InstructionFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER CONFLICTING CHANGE
     private static final String ARG_PARAM1 = "whichInstruction";
-    
+
+    //THIS IS ANOTHER TEST
+
     ImageView topPic;
     ImageView botPic;
     TextView instruction_one;
