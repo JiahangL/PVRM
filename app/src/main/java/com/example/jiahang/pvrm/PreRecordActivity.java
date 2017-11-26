@@ -60,7 +60,7 @@ public class PreRecordActivity extends AppCompatActivity {
         initializeInstruction();
         mMyFileWriter = MyFileWriter.get(subjectID, "", PreRecordActivity.this);
         mConnectThread = ConnectThread.get(null, null, null);
-        mCountDownTimer = new CountDownTimer(1*1000, 250) {//apple
+        mCountDownTimer = new CountDownTimer(5*1000, 250) {//apple
             int secondsLeft = 0;
             @Override
             public void onTick(long ms) {
@@ -80,7 +80,7 @@ public class PreRecordActivity extends AppCompatActivity {
                 mCountdownTimerAfterStart.start();
             }
         };
-        mCountdownTimerAfterStart = new CountDownTimer(1*1000, 1000) {//apple
+        mCountdownTimerAfterStart = new CountDownTimer(5*1000, 1000) {//apple
             @Override
             public void onTick(long l) {
                 int secondsLeft = Math.round((float)l / 1000.0f);
@@ -147,7 +147,7 @@ public class PreRecordActivity extends AppCompatActivity {
                 Intent i = new Intent(PreRecordActivity.this, DataRecordActivity.class);
                 i.putExtra(EXTRA_SUBJECT_ID, subjectID);
                 i.putExtra(FROM_PRERECORD_ACTIVITY, true);
-                i.putExtra(EXTRA_SKIP_FAST, getIntent().getBooleanExtra(EXTRA_SKIP_FAST, true));
+                i.putExtra(EXTRA_SKIP_FAST, getIntent().getStringExtra(EXTRA_SKIP_FAST));
                 startActivity(i);
             }
         });
@@ -219,15 +219,15 @@ public class PreRecordActivity extends AppCompatActivity {
             case 10:
             case 0:
                 //The button is first click
-                return "rest_arm";
+                return "calibrate emg rest";
             case 11:
             case 1:
                 //The button is clicked the second time
                 //highlight the second step
-                return "flex_biceps";
+                return "calibrate emg biceps";
             case 12:
             case 2:
-                return "flex_triceps";
+                return "calibrate emg triceps";
             default:
                 btn_instruction3.setTextColor(getResources().getColor(R.color.inactive_color));
                 next_btn.setEnabled(true);

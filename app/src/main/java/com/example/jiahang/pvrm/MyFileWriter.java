@@ -124,24 +124,26 @@ public class MyFileWriter {
 
     public void writeData(String str){
         try {
-            mFileWriter.write(str);
+            if(!str.contains("type:")) {
+                mFileWriter.write(str);
+                Log.e("FileWriter", str);
+            }
             String[] tmp = str.split(",");
-            if(tmp.length>4){
+            if(tmp.length>20){
                 count+=1;
+                float tmp_speed = Math.abs(Float.parseFloat(tmp[11]));
+                current_angle = tmp[17];
+                current_load = tmp[2];
+                current_speed = tmp[11];
+                current_bicept = tmp[13];
+                current_tricept = tmp[14];
 
-                float tmp_speed = Math.abs(Float.parseFloat(tmp[2]));
-                current_angle = tmp[0];
-                current_load = tmp[1];
-                current_speed = tmp[2];
-                current_bicept = tmp[3];
-                current_tricept = tmp[4];
-
-                if(tmp_speed > 20){
+                if(tmp_speed >20){
                     speed_sum += tmp_speed;
                     speed_count+=1;
                 }
-                bicept_count = Math.abs(Float.parseFloat(tmp[3]))>avg_bicept? bicept_count+1:0;
-                triept_count = Math.abs(Float.parseFloat(tmp[4]))>avg_tricept?triept_count+1:0;
+                bicept_count = Math.abs(Float.parseFloat(tmp[13]))>avg_bicept? bicept_count+1:0;
+                triept_count = Math.abs(Float.parseFloat(tmp[14]))>avg_tricept?triept_count+1:0;
             }
             else{
                 count = 0;
@@ -152,7 +154,7 @@ public class MyFileWriter {
                 speed_sum = 0;
                 speed_count =0;
             }
-            Log.e("FileWriter", str);
+
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("Write File", e.toString());

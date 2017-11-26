@@ -2,6 +2,7 @@ package com.example.jiahang.pvrm;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,7 +26,12 @@ public class NegativeResultFragment extends DialogFragment {
         mText = (TextView) v.findViewById(R.id.tv_fail_fragment);
         mResultText = getArguments().getString(ARG_RESULT);
         mText.setText(mResultText);
-        return new AlertDialog.Builder(getActivity()).setView(v).create();
+        return new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).setCancelable(true).create();
     }
 
 }

@@ -54,9 +54,9 @@ public class UnfinishedPorgressFragment extends DialogFragment {
                         Shared.putInt(getActivity(), Shared.ACTIVITY_TRACKER, 0);
                         Shared.putInt(getActivity(), Shared.STEP_TRACKER, 0);
                         Shared.putBoolean(getActivity(), Shared.TO_UNFINISH, false);
-
                     }
                 })
+                .setCancelable(false)
                 .create();
     }
     private void deleteFile(){

@@ -57,7 +57,6 @@ public class ConnectedThread extends Thread {
                     lastHashtag = i;
                     byte[] buffer1 = Arrays.copyOfRange(buffer, begin, i);//the first byte read from buffer
                     String str = new String(buffer1);
-
                     mHandler.obtainMessage(MSG_GOT_DATA, str).sendToTarget();
                     begin = i + 1;//update begin so that when the next hashtag is read it knows where to start
                     if (i == bytes - 1) {//when the buffer becomes full and the last byte is #

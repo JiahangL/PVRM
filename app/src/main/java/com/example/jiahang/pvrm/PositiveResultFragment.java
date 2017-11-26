@@ -28,7 +28,12 @@ public class PositiveResultFragment extends DialogFragment {
         mText = (TextView) v.findViewById(R.id.tv_positive_fragment);
         mResultText = getArguments().getString(ARG_RESULT);
         mText.setText(mResultText);
-        return new AlertDialog.Builder(getActivity()).setView(v).create();
+        return new AlertDialog.Builder(getActivity()).setView(v).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        }).setCancelable(true).create();
     }
 
 }

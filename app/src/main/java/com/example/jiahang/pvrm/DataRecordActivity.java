@@ -60,11 +60,12 @@ public class DataRecordActivity extends AppCompatActivity {
     private static String TEST_TERM;
     int lowestBounce = 5;
     int lowerbounce = 40;
-    int higherbounce = 70;
+    int higherbounce = 100;
     boolean skip_fast = true;
     int status = 0;
     String f_mts, f_mas, e_mas, e_mts;
     String[] status_array = {"Flexion", "Extension"};
+    String[] speed_array ={"Slow", "Medium", "Fast", "Preferred"};
     //done step is the number of the steps that is done == the step number that need to be done next
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class DataRecordActivity extends AppCompatActivity {
         userid = getIntent().getStringExtra(PatientQuestionnaireActivity.EXTRA_SUBJECT_ID);
         //mMyFileWriter = MyFileWriter.get(null, null, null);
 
-        mCountdownTimerBeforeStart =  new CountDownTimer(2*1000, 150) {
+        mCountdownTimerBeforeStart =  new CountDownTimer(5*1000, 150) {
             int secondsLeft = 0;
             @Override
             public void onTick(long ms) {
@@ -107,13 +108,13 @@ public class DataRecordActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                mMyFileWriter.writeData("\ntrail"+step%12+"-"+status_array[status]+"\n");
+                mMyFileWriter.writeData("\n"+status_array[status]+"-"+speed_array[(step%12)/3]+"-trail"+step%12+"\n");
                 say("q");//if there is not enough storage space, can't send data
                 mCountdownTimerAfterStart.start();
             }
         };
 
-        mCountdownTimerAfterStart = new CountDownTimer(3*1000, 150) {
+        mCountdownTimerAfterStart = new CountDownTimer(5*1000, 150) {
             int secondsLeft = 0;
             @Override
             public void onTick(long ms) {
@@ -146,27 +147,40 @@ public class DataRecordActivity extends AppCompatActivity {
                 textview_bicep_active.setText(active_bi? "Active": "Passive");
                 textview_tricep_active.setText(active_tri?"Active": "Passive");
                 boolean b = (remainder < 3 && speed>lowestBounce&&speed<lowerbounce)||(remainder>=3 &&remainder<=5 && (speed < higherbounce&&speed>lowerbounce)) || (remainder<=8 && remainder>=6 && speed>higherbounce) ||remainder>8;
-                if(!b) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(NegativeResultFragment.ARG_RESULT, "Please adapt the speed");
-                    NegativeResultFragment dialog = new NegativeResultFragment();
-                    dialog.setArguments(bundle);
-                    dialog.show(getSupportFragmentManager(), "speed");
-                    mMyFileWriter.flush();
-                    mMyFileWriter.writeData("\nbad\n");
+                boolean tooslow=(remainder < 3 &&speed<lowestBounce)||(remainder>=3 &&remainder<=5 &&speed < lowerbounce) || (remainder<=8 && remainder>=6 && speed < higherbounce) ||(remainder>8&&speed<lowestBounce);
+                boolean toofast=(remainder < 3 && speed>lowerbounce)||(remainder>=3 &&remainder<=5 &&speed >higherbounce);
+                String badreason = "";
+                if(tooslow){
+                    badreason+="tooslow ";
                 }
-                else if(active_bi||active_tri) {
-                    mMyFileWriter.flush();
-                    mMyFileWriter.writeData("\nbad\n");
+                if(toofast){
+                    badreason+="toofast ";
+                }
+                if(active_bi){
+                    badreason+="active_biceps ";
+                }
+                if(active_tri){
+                    badreason+="active_triceps ";
+                }
+                if(badreason.length()>0) {
+                    if(tooslow||toofast) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(NegativeResultFragment.ARG_RESULT, "Please adapt the speed");
+                        NegativeResultFragment dialog = new NegativeResultFragment();
+                        dialog.setArguments(bundle);
+                        dialog.show(getSupportFragmentManager(), "speed");
+                    }
+                    mMyFileWriter.writeData("\nbad "+badreason+"\n");
                 }
                 else {
                     if(done_step<24)
-                    has_done[done_step] = true;
+                        has_done[done_step] = true;
                     done_step = done_step == currentClick+12*status ? done_step + 1 : done_step;
                     Shared.putInt(getApplicationContext(), RECORD_STEP_TRACKER, done_step);
                     step++;
-                    Toast.makeText(getApplicationContext(), "Update steps"+"steps is " + step+" done step is "+done_step, Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getApplicationContext(), "Update steps"+"steps is " + step+" done step is "+done_step, Toast.LENGTH_LONG).show();
                     status = done_step >= 12? 1:0;
+                    mMyFileWriter.writeData("\ngood\n");
                 }
                 updateUI();
 
@@ -204,7 +218,14 @@ public class DataRecordActivity extends AppCompatActivity {
         textview_bicep.setText(Shared.getFloat(this, Shared.AVG_BICEPT, 0)+"");
         textview_speed_realtime = (TextView) findViewById(R.id.ID_textview_speed_realtime);
         //mSkipFast = (CheckBox) findViewById(R.id.checkBox_skipfast);
-        skip_fast = getIntent().getBooleanExtra(EXTRA_SKIP_FAST, true);
+        String tmps="";
+        try{
+            tmps = getIntent().getStringExtra(EXTRA_SKIP_FAST);
+        }
+        catch (Exception e){
+            Log.e("tmps is ",tmps);
+        }
+        skip_fast = !"false".equals(tmps);
         if (skip_fast){
             for(int i = 6; i < 9; i++){
                 has_done[i] = true;

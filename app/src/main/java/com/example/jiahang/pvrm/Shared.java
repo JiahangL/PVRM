@@ -21,7 +21,7 @@ public class Shared {
     private static final String TAG="SharedPreference";
     public static final String TO_UNFINISH = "un_unfinish";
     public static final String RECORD_STEP_TRACKER= "step_tracker";
-
+    public static final String SHARED_SKIP_FAST = "reason";
     public static final String AVG_TRICEPT = "avg_tricept";
     public static final String AVG_BICEPT= "avg_bicept";
 

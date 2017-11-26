@@ -48,6 +48,7 @@ import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_TAKING
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_TESTED_ARM;
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_WRIST_ANGLE;
 import static com.example.jiahang.pvrm.Shared.ACTIVITY_TRACKER;
+import static com.example.jiahang.pvrm.Shared.SHARED_SKIP_FAST;
 import static com.example.jiahang.pvrm.Shared.TO_UNFINISH;
 
 import static com.example.jiahang.pvrm.PatientQuestionnaireActivity.EXTRA_SUBJECT_ID;
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         mMyFileWriter = MyFileWriter.get(subjectID, composeInitialContent(), this);
         mUIHandler = new MyDataHandler(MainActivity.this);
         mConnectThread = ConnectThread.get(device, mController.getAdapter(), mUIHandler);
-        mCountDownTimer = new CountDownTimer(1 * 1000, 250) { //apple
+        mCountDownTimer = new CountDownTimer(5 * 1000, 250) { //apple
             int secondsLeft = 0;
 
             @Override
@@ -160,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
                 mCountdownTimerAfterStart.start();
             }
         };
-        mCountdownTimerAfterStart = new CountDownTimer(1 * 1000, 1000) {//apple
+        mCountdownTimerAfterStart = new CountDownTimer(5 * 1000, 1000) {//apple
             int secondsLeft = 0;
 
             @Override
@@ -280,7 +281,8 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, PreRecordActivity.class);
                 i.putExtra(EXTRA_SUBJECT_ID, subjectID);
-                i.putExtra(EXTRA_SKIP_FAST, getIntent().getBooleanExtra(EXTRA_SKIP_FAST, true));
+                i.putExtra(EXTRA_FOREARM_LENGTH, forearmLength);
+                i.putExtra(EXTRA_SKIP_FAST, getIntent().getStringExtra(EXTRA_SKIP_FAST));
                 startActivity(i);
             }
         });
@@ -292,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         calibration_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mMyFileWriter.writeData("calibrate\n");
+                mMyFileWriter.writeData("\ncalibrate_imu/load cell\n");
                 calibration_btn.setText("Calibrating");
                 mCountDownTimer.start();
             }
@@ -452,6 +454,8 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
             }
             i.putExtra(EXTRA_SUBJECT_ID, subjectID);
             i.putExtra(EXTRA_FOREARM_LENGTH, forearmLength);
+
+            i.putExtra(EXTRA_SKIP_FAST, Shared.getString(getApplicationContext(), SHARED_SKIP_FAST));
             startActivity(i);
             return;
         }
@@ -489,28 +493,30 @@ public class MainActivity extends AppCompatActivity implements MyDataHandler.Pop
         subjectGender = i.getStringExtra(EXTRA_PATIENT_GENDER);
         String sharing = "";
        // String sharing = "Patient ID: " + subjectID + "\n Gender: " + subjectGender + "\n Date of Birth: " + subjectDOB + "\n + "\n Height: " + heightFeet +"ft. " +  heightInch + " in\nWeight: " + subjectWeight + "\n  + "\nTested Date: " + subjectTestDate + "\n";
-        sharing = sharing+ "\nCategory: " + categorySelected
-                +"\nForearm Length: "+ forearmLength
-        +"\nTestDate :"+i.getStringExtra( EXTRA_TEST_DATE )
-        +"\nWeight :"+i.getStringExtra( EXTRA_WEIGHT )
-        +"\nExtra tested arm :"+i.getStringExtra( EXTRA_TESTED_ARM )
-                +"\nGender :"+i.getStringExtra( EXTRA_PATIENT_GENDER )
-                +"\nWrist Angel :"+i.getStringExtra( EXTRA_WRIST_ANGLE )
-                +"\nDOB :"+i.getStringExtra( EXTRA_DATE_OF_BIRTH )
-                +"\nHeight ft :"+i.getStringExtra( EXTRA_HEIGHT_FT )
-                +"\nHeight inch :"+i.getStringExtra( EXTRA_HEIGHT_IN )
-                +"\nArm Angle :"+i.getStringExtra( EXTRA_ARM_ANGLE )
-                +"\nSubject ID :"+i.getStringExtra( EXTRA_SUBJECT_ID )
+        sharing = sharing+
+                "\nSubject ID: "+i.getStringExtra( EXTRA_SUBJECT_ID )
+                +"\nCategory: " + categorySelected
+                +"\nForearm Length(inches): "+ forearmLength
+        +"\nTestDate: "+i.getStringExtra( EXTRA_TEST_DATE )
+        +"\nWeight(lbs): "+i.getStringExtra( EXTRA_WEIGHT )
+        +"\nExtra tested arm: "+i.getStringExtra( EXTRA_TESTED_ARM )
+                +"\nGender: "+i.getStringExtra( EXTRA_PATIENT_GENDER )
+                +"\nWrist Angel(deg): "+i.getStringExtra( EXTRA_WRIST_ANGLE )
+                +"\nDOB: "+i.getStringExtra( EXTRA_DATE_OF_BIRTH )
+                +"\nHeight ft: "+i.getStringExtra( EXTRA_HEIGHT_FT )
+                +"\nHeight inch: "+i.getStringExtra( EXTRA_HEIGHT_IN )
+                +"\nArm Angle(deg): "+i.getStringExtra( EXTRA_ARM_ANGLE )
+                +"\nSkip fast: "+i.getStringExtra(EXTRA_SKIP_FAST)
                 +"\nPresence of Clonus: " +i.getStringExtra(EXTRA_PRESENCE_OF_CLONUS)
-                +"\nPresence of tremor :"+i.getStringExtra( EXTRA_PRESENCE_OF_TREMOR )
-                +"\nHigh Stress :"+i.getStringExtra( EXTRA_HIGH_STRESS )
-                +"\nFaigued :"+i.getStringExtra( EXTRA_FATIGUED )
-                +"\nHave infection :"+i.getStringExtra( EXTRA_HAVE_INFECTION )
-                +"\nMissed Medication :"+i.getStringExtra( EXTRA_MISSED_MEDICATION )
-                +"\nTaking new Medication :"+i.getStringExtra( EXTRA_TAKING_NEW_MEDICATION )
-                +"\nInjured arm :"+i.getStringExtra( EXTRA_INJURED_ARM )
-                +"\nFeeling pain :"+i.getStringExtra( EXTRA_FEELING_PAIN )
-                +"\nSkip fast :"+i.getBooleanExtra(EXTRA_SKIP_FAST, true)+"\n";
+                +"\nPresence of Tremor: "+i.getStringExtra( EXTRA_PRESENCE_OF_TREMOR )
+                +"\nHigh Stress: "+i.getStringExtra( EXTRA_HIGH_STRESS )
+                +"\nFatigued: "+i.getStringExtra( EXTRA_FATIGUED )
+                +"\nHave Infection: "+i.getStringExtra( EXTRA_HAVE_INFECTION )
+                +"\nMissed Medication: "+i.getStringExtra( EXTRA_MISSED_MEDICATION )
+                +"\nTaking New Medication: "+i.getStringExtra( EXTRA_TAKING_NEW_MEDICATION )
+                +"\nInjured Arm: "+i.getStringExtra( EXTRA_INJURED_ARM )
+                +"\nFeeling Pain: "+i.getStringExtra( EXTRA_FEELING_PAIN )
+               +"\n";
         return sharing;
     }
 

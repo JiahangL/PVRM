@@ -78,6 +78,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
     EditText editText_arm_angle;
     TextView textView_arm_angle_label;
     RadioGroup radioGroup_skip_fast;
+    EditText editText_skip_fast;
     /**Bottom elements**/
     TextView textView_fast_extension_flexion_title;
     RadioGroup radioGroup_fast_extension_flexion;
@@ -122,6 +123,7 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         button_nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Shared.putString(getApplicationContext(), Shared.SHARED_SKIP_FAST, editText_fast_extension_flexion.getText().toString());
                 Intent intent = createIntent();
                 if(checkRequiredFields())
                     startActivity(intent);
@@ -441,25 +443,25 @@ public class PatientQuestionnaireActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_PATIENT_GENDER, gender);
         intent.putExtra(EXTRA_TESTED_ARM, whichArm);
         intent.putExtra(EXTRA_WRIST_ANGLE, editText_wrist_angle.getText().toString());
-        intent.putExtra(EXTRA_SKIP_FAST, radioGroup_skip_fast.getCheckedRadioButtonId()!=ID_radiobutton_fast_extension_flexion_yes );
         String dob = Integer.toString(datepicker_date_of_birth.getMonth()) + "-" +
                 Integer.toString(datepicker_date_of_birth.getDayOfMonth()) + "-" +
                 Integer.toString(datepicker_date_of_birth.getYear());
         intent.putExtra(EXTRA_DATE_OF_BIRTH, dob);
-        intent.putExtra(EXTRA_SUBJECT_ID, clinicianName+dob);
+        intent.putExtra(EXTRA_SUBJECT_ID, Calendar.getInstance().getTimeInMillis()+"");
         intent.putExtra(EXTRA_HEIGHT_FT, editText_height_ft.getText().toString());
         intent.putExtra(EXTRA_HEIGHT_IN, editText_height_in.getText().toString());
         intent.putExtra(EXTRA_ARM_ANGLE, editText_arm_angle.getText().toString());
-        intent.putExtra(EXTRA_PRESENCE_OF_CLONUS, editText_presence_of_clonus.getText().toString());
-        intent.putExtra(EXTRA_PRESENCE_OF_TREMOR, editText_presence_of_tremor.getText().toString());
-        intent.putExtra(EXTRA_HIGH_STRESS, editText_high_stress.getText().toString());
-        intent.putExtra(EXTRA_FATIGUED, editText_fatigued.getText().toString());
-        intent.putExtra(EXTRA_HAVE_INFECTION, editText_have_infection.getText().toString());
-        intent.putExtra(EXTRA_MISSED_MEDICATION, editText_missed_medication.getText().toString());
-        intent.putExtra(EXTRA_TAKING_NEW_MEDICATION, editText_taking_new_medication.getText().toString());
-        intent.putExtra(EXTRA_INJURED_ARM, editText_injured_arm.getText().toString());
-        intent.putExtra(EXTRA_FEELING_PAIN, editText_feeling_pain.getText().toString());
 
+        intent.putExtra(EXTRA_SKIP_FAST, editText_fast_extension_flexion.getText().toString().length()==0? "false":editText_fast_extension_flexion.getText().toString() );
+        intent.putExtra(EXTRA_PRESENCE_OF_CLONUS, editText_presence_of_clonus.getText().toString().length()==0? "false":editText_presence_of_clonus.getText().toString());
+        intent.putExtra(EXTRA_PRESENCE_OF_TREMOR, editText_presence_of_tremor.getText().toString().length()==0? "false":editText_presence_of_tremor.getText().toString());
+        intent.putExtra(EXTRA_HIGH_STRESS, editText_high_stress.getText().toString().length()==0? "false":editText_high_stress.getText().toString());
+        intent.putExtra(EXTRA_FATIGUED, editText_fatigued.getText().toString().length()==0? "false": editText_fatigued.getText().toString());
+        intent.putExtra(EXTRA_HAVE_INFECTION, editText_have_infection.getText().toString().length()==0? "false": editText_have_infection.getText().toString());
+        intent.putExtra(EXTRA_MISSED_MEDICATION, editText_missed_medication.getText().toString().length()==0? "false":editText_missed_medication.getText().toString());
+        intent.putExtra(EXTRA_TAKING_NEW_MEDICATION, editText_taking_new_medication.getText().toString().length()==0? "false":editText_taking_new_medication.getText().toString());
+        intent.putExtra(EXTRA_INJURED_ARM, editText_injured_arm.getText().toString().length()==0? "false":editText_injured_arm.getText().toString());
+        intent.putExtra(EXTRA_FEELING_PAIN, editText_feeling_pain.getText().toString().length()==0? "false":editText_feeling_pain.getText().toString());
 
         return intent;
     }
